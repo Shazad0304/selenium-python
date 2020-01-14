@@ -19,7 +19,7 @@ if len(visas) > 1:
     secVisa = '%7C'+visas[1]
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('--headless')
-driver = webdriver.Chrome(executable_path='./chromedriver1',chrome_options=chrome_options)
+driver = webdriver.Chrome(executable_path='./chromedriver1',options=chrome_options)
 driver.get('https://www.dice.com/employer/talent/search;q='+skill+';page=1;pageSize='+noResume+';location='+location+';sortBy=relevance;sortByDirection=desc;workPermits='+firstVisa+secVisa+';yOEMin='+minExp+';yOEMax='+maxExp+';excludeRecruiters=true;contactInfo=email;lastActive=90;profileSource=resumes')
 WebDriverWait(driver,20).until(EC.presence_of_all_elements_located((By.ID,'username'))) 
 driver.find_element_by_id('username').send_keys('imran@prosistech.com')
@@ -31,7 +31,8 @@ soup = BeautifulSoup(a,features="html.parser")
 for o in soup.find_all('a', attrs={'class': 'view-link ng-star-inserted'},href=True):
     urls.append('https://www.dice.com'+o['href'])
 
-workbook = xlsxwriter.Workbook(skill+str(random.randrange(1,100))+ '.xlsx')
+fileName = skill+str(random.randrange(1,100))+ '.xlsx'
+workbook = xlsxwriter.Workbook(fileName)
 worksheet = workbook.add_worksheet()
 row = 0
 for items in urls:
@@ -50,5 +51,4 @@ for items in urls:
    
 
 workbook.close()
-print('DONE')
-    
+print('DONE' + ' '+ fileName)
